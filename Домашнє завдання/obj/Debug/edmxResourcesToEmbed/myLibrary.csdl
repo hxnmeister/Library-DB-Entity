@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="myLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__Book__IdAuthor__286302EC" FromRole="Author" ToRole="Book" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdAuthor" Type="Int32" Nullable="false" />
+    <Property Name="Pages" Type="Int32" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="IdPublisher" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Author" Relationship="Self.FK__Book__IdAuthor__286302EC" FromRole="Book" ToRole="Author" />
+    <NavigationProperty Name="Publisher" Relationship="Self.FK__Book__IdPublishe__29572725" FromRole="Book" ToRole="Publisher" />
+  </EntityType>
+  <EntityType Name="Publisher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PublisherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__Book__IdPublishe__29572725" FromRole="Publisher" ToRole="Book" />
+  </EntityType>
+  <Association Name="FK__Book__IdAuthor__286302EC">
+    <End Role="Author" Type="Self.Author" Multiplicity="1" />
+    <End Role="Book" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="IdAuthor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Book__IdPublishe__29572725">
+    <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+    <End Role="Book" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publisher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="IdPublisher" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="myLibraryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Author" EntityType="Self.Author" />
+    <EntitySet Name="Book" EntityType="Self.Book" />
+    <EntitySet Name="Publisher" EntityType="Self.Publisher" />
+    <AssociationSet Name="FK__Book__IdAuthor__286302EC" Association="Self.FK__Book__IdAuthor__286302EC">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="Book" EntitySet="Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Book__IdPublishe__29572725" Association="Self.FK__Book__IdPublishe__29572725">
+      <End Role="Publisher" EntitySet="Publisher" />
+      <End Role="Book" EntitySet="Book" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

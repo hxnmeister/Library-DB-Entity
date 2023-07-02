@@ -1,0 +1,17 @@
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\Домашнє завдання.exe.config
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\Домашнє завдання.exe
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\Домашнє завдання.pdb
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\EntityFramework.dll
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\EntityFramework.SqlServer.dll
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\EntityFramework.xml
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\EntityFramework.SqlServer.xml
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\bin\Debug\ru\EntityFramework.resources.dll
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.csproj.AssemblyReference.cache
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.csproj.SuggestedBindingRedirects.cache
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє_завдання.Form1.resources
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє_завдання.Properties.Resources.resources
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.csproj.GenerateResource.cache
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.csproj.CoreCompileInputs.cache
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.csproj.CopyComplete
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.exe
+D:\GitHubDesktop\MyHomework_30.06.23\Домашнє завдання\obj\Debug\Домашнє завдання.pdb
