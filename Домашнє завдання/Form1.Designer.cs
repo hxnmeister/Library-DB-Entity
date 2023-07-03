@@ -30,18 +30,24 @@
         {
             this.LibraryTabControl = new System.Windows.Forms.TabControl();
             this.AuthorTabPage = new System.Windows.Forms.TabPage();
-            this.EditAuthorButton = new System.Windows.Forms.Button();
-            this.DeleteAuthorButton = new System.Windows.Forms.Button();
-            this.ConfirmAuthorButton = new System.Windows.Forms.Button();
-            this.AuthorInfoTextBox = new System.Windows.Forms.TextBox();
-            this.AuthorComboBox = new System.Windows.Forms.ComboBox();
-            this.AddAuthorButton = new System.Windows.Forms.Button();
             this.AuthorsDataGridView = new System.Windows.Forms.DataGridView();
             this.BookTabPage = new System.Windows.Forms.TabPage();
+            this.BooksDataGridView = new System.Windows.Forms.DataGridView();
             this.PublisherTabPage = new System.Windows.Forms.TabPage();
+            this.PublishersDataGridView = new System.Windows.Forms.DataGridView();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.DeleteButton = new System.Windows.Forms.Button();
+            this.ConfirmButton = new System.Windows.Forms.Button();
+            this.InfoTextBox = new System.Windows.Forms.TextBox();
+            this.ParametrsComboBox = new System.Windows.Forms.ComboBox();
+            this.AddButton = new System.Windows.Forms.Button();
             this.LibraryTabControl.SuspendLayout();
             this.AuthorTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AuthorsDataGridView)).BeginInit();
+            this.BookTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BooksDataGridView)).BeginInit();
+            this.PublisherTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PublishersDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // LibraryTabControl
@@ -52,90 +58,20 @@
             this.LibraryTabControl.Location = new System.Drawing.Point(12, 12);
             this.LibraryTabControl.Name = "LibraryTabControl";
             this.LibraryTabControl.SelectedIndex = 0;
-            this.LibraryTabControl.Size = new System.Drawing.Size(776, 426);
+            this.LibraryTabControl.Size = new System.Drawing.Size(776, 283);
             this.LibraryTabControl.TabIndex = 0;
             this.LibraryTabControl.SelectedIndexChanged += new System.EventHandler(this.LibraryTabControl_SelectedIndexChanged);
             // 
             // AuthorTabPage
             // 
-            this.AuthorTabPage.Controls.Add(this.EditAuthorButton);
-            this.AuthorTabPage.Controls.Add(this.DeleteAuthorButton);
-            this.AuthorTabPage.Controls.Add(this.ConfirmAuthorButton);
-            this.AuthorTabPage.Controls.Add(this.AuthorInfoTextBox);
-            this.AuthorTabPage.Controls.Add(this.AuthorComboBox);
-            this.AuthorTabPage.Controls.Add(this.AddAuthorButton);
             this.AuthorTabPage.Controls.Add(this.AuthorsDataGridView);
             this.AuthorTabPage.Location = new System.Drawing.Point(4, 22);
             this.AuthorTabPage.Name = "AuthorTabPage";
             this.AuthorTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AuthorTabPage.Size = new System.Drawing.Size(768, 400);
+            this.AuthorTabPage.Size = new System.Drawing.Size(768, 257);
             this.AuthorTabPage.TabIndex = 0;
             this.AuthorTabPage.Text = "Authors";
             this.AuthorTabPage.UseVisualStyleBackColor = true;
-            // 
-            // EditAuthorButton
-            // 
-            this.EditAuthorButton.Location = new System.Drawing.Point(6, 309);
-            this.EditAuthorButton.Name = "EditAuthorButton";
-            this.EditAuthorButton.Size = new System.Drawing.Size(90, 45);
-            this.EditAuthorButton.TabIndex = 6;
-            this.EditAuthorButton.Text = "Confirm Editing  Value";
-            this.EditAuthorButton.UseVisualStyleBackColor = true;
-            this.EditAuthorButton.Click += new System.EventHandler(this.EditAuthorButton_Click);
-            // 
-            // DeleteAuthorButton
-            // 
-            this.DeleteAuthorButton.Location = new System.Drawing.Point(6, 258);
-            this.DeleteAuthorButton.Name = "DeleteAuthorButton";
-            this.DeleteAuthorButton.Size = new System.Drawing.Size(90, 45);
-            this.DeleteAuthorButton.TabIndex = 5;
-            this.DeleteAuthorButton.Text = "Delete Selected Value";
-            this.DeleteAuthorButton.UseVisualStyleBackColor = true;
-            this.DeleteAuthorButton.Click += new System.EventHandler(this.DeleteAuthorButton_Click);
-            // 
-            // ConfirmAuthorButton
-            // 
-            this.ConfirmAuthorButton.Enabled = false;
-            this.ConfirmAuthorButton.Location = new System.Drawing.Point(634, 349);
-            this.ConfirmAuthorButton.Name = "ConfirmAuthorButton";
-            this.ConfirmAuthorButton.Size = new System.Drawing.Size(61, 45);
-            this.ConfirmAuthorButton.TabIndex = 4;
-            this.ConfirmAuthorButton.Text = "Confirm Entry";
-            this.ConfirmAuthorButton.UseVisualStyleBackColor = true;
-            this.ConfirmAuthorButton.Click += new System.EventHandler(this.ConfirmAuthorButton_Click);
-            // 
-            // AuthorInfoTextBox
-            // 
-            this.AuthorInfoTextBox.Enabled = false;
-            this.AuthorInfoTextBox.Location = new System.Drawing.Point(662, 285);
-            this.AuthorInfoTextBox.Name = "AuthorInfoTextBox";
-            this.AuthorInfoTextBox.Size = new System.Drawing.Size(100, 20);
-            this.AuthorInfoTextBox.TabIndex = 3;
-            this.AuthorInfoTextBox.Enter += new System.EventHandler(this.AuthorInfoTextBox_Enter);
-            // 
-            // AuthorComboBox
-            // 
-            this.AuthorComboBox.FormattingEnabled = true;
-            this.AuthorComboBox.Items.AddRange(new object[] {
-            "Id",
-            "FirstName",
-            "LastName"});
-            this.AuthorComboBox.Location = new System.Drawing.Point(634, 258);
-            this.AuthorComboBox.Name = "AuthorComboBox";
-            this.AuthorComboBox.Size = new System.Drawing.Size(128, 21);
-            this.AuthorComboBox.TabIndex = 2;
-            this.AuthorComboBox.SelectedIndexChanged += new System.EventHandler(this.AuthorComboBox_SelectedIndexChanged);
-            // 
-            // AddAuthorButton
-            // 
-            this.AddAuthorButton.Enabled = false;
-            this.AddAuthorButton.Location = new System.Drawing.Point(701, 349);
-            this.AddAuthorButton.Name = "AddAuthorButton";
-            this.AddAuthorButton.Size = new System.Drawing.Size(61, 45);
-            this.AddAuthorButton.TabIndex = 1;
-            this.AddAuthorButton.Text = "Add Value";
-            this.AddAuthorButton.UseVisualStyleBackColor = true;
-            this.AddAuthorButton.Click += new System.EventHandler(this.AddAuthorButton_Click);
             // 
             // AuthorsDataGridView
             // 
@@ -148,37 +84,131 @@
             // 
             // BookTabPage
             // 
+            this.BookTabPage.Controls.Add(this.BooksDataGridView);
             this.BookTabPage.Location = new System.Drawing.Point(4, 22);
             this.BookTabPage.Name = "BookTabPage";
             this.BookTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.BookTabPage.Size = new System.Drawing.Size(768, 400);
+            this.BookTabPage.Size = new System.Drawing.Size(768, 257);
             this.BookTabPage.TabIndex = 1;
             this.BookTabPage.Text = "Books";
             this.BookTabPage.UseVisualStyleBackColor = true;
             // 
+            // BooksDataGridView
+            // 
+            this.BooksDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.BooksDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.BooksDataGridView.MultiSelect = false;
+            this.BooksDataGridView.Name = "BooksDataGridView";
+            this.BooksDataGridView.Size = new System.Drawing.Size(756, 246);
+            this.BooksDataGridView.TabIndex = 7;
+            // 
             // PublisherTabPage
             // 
+            this.PublisherTabPage.Controls.Add(this.PublishersDataGridView);
             this.PublisherTabPage.Location = new System.Drawing.Point(4, 22);
             this.PublisherTabPage.Name = "PublisherTabPage";
             this.PublisherTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.PublisherTabPage.Size = new System.Drawing.Size(768, 400);
+            this.PublisherTabPage.Size = new System.Drawing.Size(768, 257);
             this.PublisherTabPage.TabIndex = 2;
             this.PublisherTabPage.Text = "Publishers";
             this.PublisherTabPage.UseVisualStyleBackColor = true;
+            // 
+            // PublishersDataGridView
+            // 
+            this.PublishersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PublishersDataGridView.Location = new System.Drawing.Point(6, 6);
+            this.PublishersDataGridView.MultiSelect = false;
+            this.PublishersDataGridView.Name = "PublishersDataGridView";
+            this.PublishersDataGridView.Size = new System.Drawing.Size(756, 246);
+            this.PublishersDataGridView.TabIndex = 7;
+            // 
+            // EditButton
+            // 
+            this.EditButton.Location = new System.Drawing.Point(22, 352);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(90, 45);
+            this.EditButton.TabIndex = 12;
+            this.EditButton.Text = "Confirm Editing  Value";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
+            // DeleteButton
+            // 
+            this.DeleteButton.Location = new System.Drawing.Point(22, 301);
+            this.DeleteButton.Name = "DeleteButton";
+            this.DeleteButton.Size = new System.Drawing.Size(90, 45);
+            this.DeleteButton.TabIndex = 11;
+            this.DeleteButton.Text = "Delete Selected Value";
+            this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
+            // ConfirmButton
+            // 
+            this.ConfirmButton.Enabled = false;
+            this.ConfirmButton.Location = new System.Drawing.Point(650, 392);
+            this.ConfirmButton.Name = "ConfirmButton";
+            this.ConfirmButton.Size = new System.Drawing.Size(61, 45);
+            this.ConfirmButton.TabIndex = 10;
+            this.ConfirmButton.Text = "Confirm Entry";
+            this.ConfirmButton.UseVisualStyleBackColor = true;
+            this.ConfirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
+            // 
+            // InfoTextBox
+            // 
+            this.InfoTextBox.Enabled = false;
+            this.InfoTextBox.Location = new System.Drawing.Point(678, 328);
+            this.InfoTextBox.Name = "InfoTextBox";
+            this.InfoTextBox.Size = new System.Drawing.Size(100, 20);
+            this.InfoTextBox.TabIndex = 9;
+            this.InfoTextBox.Enter += new System.EventHandler(this.InfoTextBox_Enter);
+            // 
+            // ParametrsComboBox
+            // 
+            this.ParametrsComboBox.FormattingEnabled = true;
+            this.ParametrsComboBox.Items.AddRange(new object[] {
+            "Id",
+            "FirstName",
+            "LastName"});
+            this.ParametrsComboBox.Location = new System.Drawing.Point(650, 301);
+            this.ParametrsComboBox.Name = "ParametrsComboBox";
+            this.ParametrsComboBox.Size = new System.Drawing.Size(128, 21);
+            this.ParametrsComboBox.TabIndex = 8;
+            this.ParametrsComboBox.SelectedIndexChanged += new System.EventHandler(this.ParametrsComboBox_SelectedIndexChanged_1);
+            // 
+            // AddButton
+            // 
+            this.AddButton.Enabled = false;
+            this.AddButton.Location = new System.Drawing.Point(717, 392);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(61, 45);
+            this.AddButton.TabIndex = 7;
+            this.AddButton.Text = "Add Value";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.DeleteButton);
+            this.Controls.Add(this.ConfirmButton);
+            this.Controls.Add(this.InfoTextBox);
+            this.Controls.Add(this.ParametrsComboBox);
+            this.Controls.Add(this.AddButton);
             this.Controls.Add(this.LibraryTabControl);
             this.Name = "Form1";
             this.Text = "Form1";
             this.LibraryTabControl.ResumeLayout(false);
             this.AuthorTabPage.ResumeLayout(false);
-            this.AuthorTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AuthorsDataGridView)).EndInit();
+            this.BookTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BooksDataGridView)).EndInit();
+            this.PublisherTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PublishersDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -189,12 +219,14 @@
         private System.Windows.Forms.TabPage BookTabPage;
         private System.Windows.Forms.TabPage PublisherTabPage;
         private System.Windows.Forms.DataGridView AuthorsDataGridView;
-        private System.Windows.Forms.Button ConfirmAuthorButton;
-        private System.Windows.Forms.TextBox AuthorInfoTextBox;
-        private System.Windows.Forms.ComboBox AuthorComboBox;
-        private System.Windows.Forms.Button AddAuthorButton;
-        private System.Windows.Forms.Button EditAuthorButton;
-        private System.Windows.Forms.Button DeleteAuthorButton;
+        private System.Windows.Forms.DataGridView BooksDataGridView;
+        private System.Windows.Forms.DataGridView PublishersDataGridView;
+        private System.Windows.Forms.Button EditButton;
+        private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.Button ConfirmButton;
+        private System.Windows.Forms.TextBox InfoTextBox;
+        private System.Windows.Forms.ComboBox ParametrsComboBox;
+        private System.Windows.Forms.Button AddButton;
     }
 }
 

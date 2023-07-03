@@ -24,8 +24,6 @@ namespace Домашнє_завдання
 
             myLibrary = new myLibraryEntities();
             author = new Author();
-            book = new Book();
-            publisher = new Publisher();
 
             AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
         }
@@ -41,89 +39,151 @@ namespace Домашнє_завдання
         
         private void LibraryTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch(LibraryTabControl.SelectedIndex)
-            { 
-                case 0:
-                    AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
-                    author = new Author();
-                    break;
-            }
-        }
-        private void AuthorComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(!AuthorInfoTextBox.Enabled) AuthorInfoTextBox.Enabled = true;
-            if(!ConfirmAuthorButton.Enabled) ConfirmAuthorButton.Enabled = true;
-        }
+            if(AddButton.Enabled) AddButton.Enabled = false;
+            ParametrsComboBox.Items.Clear();
 
-        private void ConfirmAuthorButton_Click(object sender, EventArgs e)
-        {
-            switch (AuthorComboBox.SelectedIndex)
+            switch (LibraryTabControl.SelectedIndex)
             {
                 case 0:
-                    if (CheckNumber(AuthorInfoTextBox.Text, out int number) && !myLibrary.Author.ToList().Any(x => x.Id == number))
-                    {
-                        author.Id = number;
-                        SuccsessMessage(number.ToString());
-                    }
-                    else
-                    {
-                        MessageBox.Show("Введено не коректне значення Id!");
-                    }
+                    AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "FirstName", "LastName"});
+                    author = new Author();
                     break;
                 case 1:
-                    author.FirstName = AuthorInfoTextBox.Text;
-                    SuccsessMessage(AuthorInfoTextBox.Text);
+                    BooksDataGridView.DataSource = myLibrary.Book.ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "Title", "IdAuthor", "Pages", "Price", "IdPublisher"});
+                    book = new Book();
                     break;
                 case 2:
-                    author.LastName = AuthorInfoTextBox.Text;
-                    SuccsessMessage(AuthorInfoTextBox.Text);
+                    PublishersDataGridView.DataSource = myLibrary.Publisher.ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "PublisherName", "Address"});
+                    publisher = new Publisher();
                     break;
             }
-
-            AuthorInfoTextBox.Focus();
-            if (author.Id != 0 && author.LastName != null && author.FirstName != null) AddAuthorButton.Enabled = true;
         }
 
-        private void AuthorInfoTextBox_Enter(object sender, EventArgs e)
+        private void InfoTextBox_Enter(object sender, EventArgs e)
         {
-            AuthorInfoTextBox.Clear();
+            InfoTextBox.Clear();
         }
 
-        private void AddAuthorButton_Click(object sender, EventArgs e)
+        private void ParametrsComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            myLibrary.Author.Add(author);
-            myLibrary.SaveChanges();
-
-            AuthorInfoTextBox.Enabled = false;
-            ConfirmAuthorButton.Enabled = false;
-            AuthorComboBox.SelectedIndex = -1;
-            AddAuthorButton.Enabled = false;
-
-            MessageBox.Show("Нового автора було додано, оновіть вкладку щоб побачити зміни!");
-
-            author = new Author();
+            if (!InfoTextBox.Enabled) InfoTextBox.Enabled = true;
+            if (!ConfirmButton.Enabled) ConfirmButton.Enabled = true;
         }
 
-        private void DeleteAuthorButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             try
             {
-                myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
+                switch (LibraryTabControl.SelectedIndex)
+                {
+                    case 0:
+                        myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                }
 
                 myLibrary.SaveChanges();
-
                 MessageBox.Show("Для того щоб побачити зміни оновіть вкладку!");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show("Для того щоб видалити запис, виберіть його повністю!");
             }
         }
 
-        private void EditAuthorButton_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
-            myLibrary.Author.AddOrUpdate(AuthorsDataGridView.Rows[AuthorsDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Author);
+            switch (LibraryTabControl.SelectedIndex)
+            {
+                case 0:
+                    myLibrary.Author.AddOrUpdate(AuthorsDataGridView.Rows[AuthorsDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Author);
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+            }
+
             myLibrary.SaveChanges();
+            MessageBox.Show("Для того щоб побачити зміни оновіть вкладку!");
+        }
+
+        private void ConfirmButton_Click(object sender, EventArgs e)
+        {
+            switch (LibraryTabControl.SelectedIndex)
+            {
+                case 0:
+                    switch (ParametrsComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            if (CheckNumber(InfoTextBox.Text, out int number) && !myLibrary.Author.ToList().Any(x => x.Id == number))
+                            {
+                                author.Id = number;
+                                SuccsessMessage(number.ToString());
+                            }
+                            else
+                            {
+                                MessageBox.Show("Введено не коректне значення Id!");
+                            }
+                            break;
+                        case 1:
+                            author.FirstName = InfoTextBox.Text;
+                            SuccsessMessage(InfoTextBox.Text);
+                            break;
+                        case 2:
+                            author.LastName = InfoTextBox.Text;
+                            SuccsessMessage(InfoTextBox.Text);
+                            break;
+                    }
+
+                    InfoTextBox.Focus();
+                    if (author.Id != 0 && author.LastName != null && author.FirstName != null) AddButton.Enabled = true;
+
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+            }
+        }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            switch (LibraryTabControl.SelectedIndex)
+            {
+                case 0:
+                    myLibrary.Author.Add(author);
+                    myLibrary.SaveChanges();
+
+                    MessageBox.Show("Нового автора було додано, оновіть вкладку щоб побачити зміни!");
+
+                    author = new Author();
+                    break;
+                case 1:
+
+                    break;
+
+                case 2:
+
+                    break;
+            }
+
+            InfoTextBox.Enabled = false;
+            ConfirmButton.Enabled = false;
+            ParametrsComboBox.SelectedIndex = -1;
+            AddButton.Enabled = false;
         }
     }
 }
