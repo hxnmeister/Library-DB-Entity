@@ -27,7 +27,7 @@ namespace Домашнє_завдання
             myLibrary = new myLibraryEntities();
             author = new Author();
 
-            AuthorsDataGridView.DataSource = myLibrary.Author.Select(a => new { a.Id, FullName = a.LastName + " " + a.FirstName, Book = myLibrary.Book.FirstOrDefault(x => x.IdAuthor == a.Id).Title }).ToList();
+            AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
         }
 
         private bool CheckNumber(string value, out int result)
@@ -42,6 +42,8 @@ namespace Домашнє_завдання
         private void LibraryTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (AddButton.Enabled) AddButton.Enabled = false;
+            if (ConfirmButton.Enabled) ConfirmButton.Enabled = false;
+            if (ParametrsComboBox.SelectedIndex != -1) ParametrsComboBox.SelectedIndex = -1;
             ParametrsComboBox.Items.Clear();
 
             switch (LibraryTabControl.SelectedIndex)
@@ -49,19 +51,19 @@ namespace Домашнє_завдання
                 case 0:
                     author = new Author();
 
-                    AuthorsDataGridView.DataSource = myLibrary.Author.Select(a => new { a.Id, FullName = a.LastName + " " + a.FirstName, Book = myLibrary.Book.FirstOrDefault(x => x.IdAuthor == a.Id).Title }).ToList();
+                    AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
                     ParametrsComboBox.Items.AddRange(new string[] { "Id", "FirstName", "LastName" });
                     break;
                 case 1:
                     book = new Book();
 
-                    BooksDataGridView.DataSource = myLibrary.Book.Select(a => new { a.Id, a.Title, Author = myLibrary.Author.FirstOrDefault(x => x.Id == a.IdAuthor).LastName, a.Pages, a.Price, Publisher = myLibrary.Publisher.FirstOrDefault(y => y.Id == a.IdPublisher).PublisherName }).ToList();
+                    BooksDataGridView.DataSource = myLibrary.Book.ToList();
                     ParametrsComboBox.Items.AddRange(new string[] { "Id", "Title", "IdAuthor", "Pages", "Price", "IdPublisher" });
                     break;
                 case 2:
                     publisher = new Publisher();
 
-                    PublishersDataGridView.DataSource = myLibrary.Publisher.Select(a => new { a.Id, a.PublisherName, a.Address, Book = myLibrary.Book.FirstOrDefault(x => x.IdPublisher == a.Id).Title }).ToList();
+                    PublishersDataGridView.DataSource = myLibrary.Publisher.ToList();
                     ParametrsComboBox.Items.AddRange(new string[] { "Id", "PublisherName", "Address" });
                     break;
             }
@@ -74,13 +76,61 @@ namespace Домашнє_завдання
                 switch (LibraryTabControl.SelectedIndex)
                 {
                     case 0:
-                        myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
+                        Author tempAuthor = AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author;
+
+                        if (tempAuthor != null)
+                        {
+                            bool hasBooks = myLibrary.Book.Any(b => b.IdAuthor == tempAuthor.Id);
+
+                            if (hasBooks)
+                            {
+                                DialogResult result = MessageBox.Show("Даний автор має пов`язані записи в таблиці Books\nВидаляючи цього автора Ви видалете і книгу", "Підтверджуете видалення?", MessageBoxButtons.YesNo);
+                                if (result == DialogResult.Yes)
+                                {
+                                    var associatedBooks = myLibrary.Book.Where(b => b.IdAuthor == tempAuthor.Id).ToList();
+                                    foreach (var book in associatedBooks)
+                                    {
+                                        myLibrary.Book.Remove(book);
+                                    }
+
+                                    myLibrary.Author.Remove(tempAuthor);
+                                }
+                            }
+                            else
+                            {
+                                myLibrary.Author.Remove(tempAuthor);
+                            }
+                        }
                         break;
                     case 1:
                         myLibrary.Book.Remove(BooksDataGridView.SelectedRows[0].DataBoundItem as Book);
                         break;
                     case 2:
-                        myLibrary.Publisher.Remove(PublishersDataGridView.SelectedRows[0].DataBoundItem as Publisher);
+                        Publisher tempPublisher = PublishersDataGridView.SelectedRows[0].DataBoundItem as Publisher;
+
+                        if (tempPublisher != null)
+                        {
+                            bool hasBooks = myLibrary.Book.Any(b => b.IdPublisher == tempPublisher.Id);
+
+                            if (hasBooks)
+                            {
+                                DialogResult result = MessageBox.Show("Даний видавець має пов`язані записи в таблиці Books\nВидаляючи цього видавця Ви видалете і книгу", "Підтверджуете видалення?", MessageBoxButtons.YesNo);
+                                if (result == DialogResult.Yes)
+                                {
+                                    var associatedBooks = myLibrary.Book.Where(b => b.IdPublisher == tempPublisher.Id).ToList();
+                                    foreach (var book in associatedBooks)
+                                    {
+                                        myLibrary.Book.Remove(book);
+                                    }
+
+                                    myLibrary.Publisher.Remove(tempPublisher);
+                                }
+                            }
+                            else
+                            {
+                                myLibrary.Publisher.Remove(tempPublisher);
+                            }
+                        }
                         break;
                 }
 
