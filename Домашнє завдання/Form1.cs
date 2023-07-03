@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -105,21 +106,24 @@ namespace Домашнє_завдання
 
         private void DeleteAuthorButton_Click(object sender, EventArgs e)
         {
-            myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
+            try
+            {
+                myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
 
-            myLibrary.SaveChanges();
+                myLibrary.SaveChanges();
 
-            MessageBox.Show("Для того щоб побачити зміни оновіть вкладку!");
+                MessageBox.Show("Для того щоб побачити зміни оновіть вкладку!");
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Для того щоб видалити запис, виберіть його повністю!");
+            }
         }
 
         private void EditAuthorButton_Click(object sender, EventArgs e)
         {
-            AuthorsDataGridView.CellValueChanged += AuthorsDataGridView_CellValueChanged;
-        }
-
-        private void AuthorsDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            
+            myLibrary.Author.AddOrUpdate(AuthorsDataGridView.Rows[AuthorsDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Author);
+            myLibrary.SaveChanges();
         }
     }
 }

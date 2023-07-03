@@ -30,6 +30,8 @@
         {
             this.LibraryTabControl = new System.Windows.Forms.TabControl();
             this.AuthorTabPage = new System.Windows.Forms.TabPage();
+            this.EditAuthorButton = new System.Windows.Forms.Button();
+            this.DeleteAuthorButton = new System.Windows.Forms.Button();
             this.ConfirmAuthorButton = new System.Windows.Forms.Button();
             this.AuthorInfoTextBox = new System.Windows.Forms.TextBox();
             this.AuthorComboBox = new System.Windows.Forms.ComboBox();
@@ -37,8 +39,6 @@
             this.AuthorsDataGridView = new System.Windows.Forms.DataGridView();
             this.BookTabPage = new System.Windows.Forms.TabPage();
             this.PublisherTabPage = new System.Windows.Forms.TabPage();
-            this.DeleteAuthorButton = new System.Windows.Forms.Button();
-            this.EditAuthorButton = new System.Windows.Forms.Button();
             this.LibraryTabControl.SuspendLayout();
             this.AuthorTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AuthorsDataGridView)).BeginInit();
@@ -72,6 +72,26 @@
             this.AuthorTabPage.TabIndex = 0;
             this.AuthorTabPage.Text = "Authors";
             this.AuthorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // EditAuthorButton
+            // 
+            this.EditAuthorButton.Location = new System.Drawing.Point(6, 309);
+            this.EditAuthorButton.Name = "EditAuthorButton";
+            this.EditAuthorButton.Size = new System.Drawing.Size(90, 45);
+            this.EditAuthorButton.TabIndex = 6;
+            this.EditAuthorButton.Text = "Confirm Editing  Value";
+            this.EditAuthorButton.UseVisualStyleBackColor = true;
+            this.EditAuthorButton.Click += new System.EventHandler(this.EditAuthorButton_Click);
+            // 
+            // DeleteAuthorButton
+            // 
+            this.DeleteAuthorButton.Location = new System.Drawing.Point(6, 258);
+            this.DeleteAuthorButton.Name = "DeleteAuthorButton";
+            this.DeleteAuthorButton.Size = new System.Drawing.Size(90, 45);
+            this.DeleteAuthorButton.TabIndex = 5;
+            this.DeleteAuthorButton.Text = "Delete Selected Value";
+            this.DeleteAuthorButton.UseVisualStyleBackColor = true;
+            this.DeleteAuthorButton.Click += new System.EventHandler(this.DeleteAuthorButton_Click);
             // 
             // ConfirmAuthorButton
             // 
@@ -145,26 +165,6 @@
             this.PublisherTabPage.TabIndex = 2;
             this.PublisherTabPage.Text = "Publishers";
             this.PublisherTabPage.UseVisualStyleBackColor = true;
-            // 
-            // DeleteAuthorButton
-            // 
-            this.DeleteAuthorButton.Location = new System.Drawing.Point(102, 258);
-            this.DeleteAuthorButton.Name = "DeleteAuthorButton";
-            this.DeleteAuthorButton.Size = new System.Drawing.Size(90, 45);
-            this.DeleteAuthorButton.TabIndex = 5;
-            this.DeleteAuthorButton.Text = "Delete Selected Value";
-            this.DeleteAuthorButton.UseVisualStyleBackColor = true;
-            this.DeleteAuthorButton.Click += new System.EventHandler(this.DeleteAuthorButton_Click);
-            // 
-            // EditAuthorButton
-            // 
-            this.EditAuthorButton.Location = new System.Drawing.Point(6, 258);
-            this.EditAuthorButton.Name = "EditAuthorButton";
-            this.EditAuthorButton.Size = new System.Drawing.Size(90, 45);
-            this.EditAuthorButton.TabIndex = 6;
-            this.EditAuthorButton.Text = "Confirm Editing  Value";
-            this.EditAuthorButton.UseVisualStyleBackColor = true;
-            this.EditAuthorButton.Click += new System.EventHandler(this.EditAuthorButton_Click);
             // 
             // Form1
             // 
