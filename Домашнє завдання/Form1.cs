@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,7 +27,7 @@ namespace Домашнє_завдання
             myLibrary = new myLibraryEntities();
             author = new Author();
 
-            AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
+            AuthorsDataGridView.DataSource = myLibrary.Author.Select(a => new { a.Id, FullName = a.LastName + " " + a.FirstName, Book = myLibrary.Book.FirstOrDefault(x => x.IdAuthor == a.Id).Title }).ToList();
         }
 
         private bool CheckNumber(string value, out int result)
@@ -36,41 +38,33 @@ namespace Домашнє_завдання
         {
             MessageBox.Show($"Значення {value} було записано!");
         }
-        
+
         private void LibraryTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(AddButton.Enabled) AddButton.Enabled = false;
+            if (AddButton.Enabled) AddButton.Enabled = false;
             ParametrsComboBox.Items.Clear();
 
             switch (LibraryTabControl.SelectedIndex)
             {
                 case 0:
-                    AuthorsDataGridView.DataSource = myLibrary.Author.ToList();
-                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "FirstName", "LastName"});
                     author = new Author();
+
+                    AuthorsDataGridView.DataSource = myLibrary.Author.Select(a => new { a.Id, FullName = a.LastName + " " + a.FirstName, Book = myLibrary.Book.FirstOrDefault(x => x.IdAuthor == a.Id).Title }).ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "FirstName", "LastName" });
                     break;
                 case 1:
-                    BooksDataGridView.DataSource = myLibrary.Book.ToList();
-                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "Title", "IdAuthor", "Pages", "Price", "IdPublisher"});
                     book = new Book();
+
+                    BooksDataGridView.DataSource = myLibrary.Book.Select(a => new { a.Id, a.Title, Author = myLibrary.Author.FirstOrDefault(x => x.Id == a.IdAuthor).LastName, a.Pages, a.Price, Publisher = myLibrary.Publisher.FirstOrDefault(y => y.Id == a.IdPublisher).PublisherName }).ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "Title", "IdAuthor", "Pages", "Price", "IdPublisher" });
                     break;
                 case 2:
-                    PublishersDataGridView.DataSource = myLibrary.Publisher.ToList();
-                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "PublisherName", "Address"});
                     publisher = new Publisher();
+
+                    PublishersDataGridView.DataSource = myLibrary.Publisher.Select(a => new { a.Id, a.PublisherName, a.Address, Book = myLibrary.Book.FirstOrDefault(x => x.IdPublisher == a.Id).Title }).ToList();
+                    ParametrsComboBox.Items.AddRange(new string[] { "Id", "PublisherName", "Address" });
                     break;
             }
-        }
-
-        private void InfoTextBox_Enter(object sender, EventArgs e)
-        {
-            InfoTextBox.Clear();
-        }
-
-        private void ParametrsComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (!InfoTextBox.Enabled) InfoTextBox.Enabled = true;
-            if (!ConfirmButton.Enabled) ConfirmButton.Enabled = true;
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
@@ -83,10 +77,10 @@ namespace Домашнє_завдання
                         myLibrary.Author.Remove(AuthorsDataGridView.SelectedRows[0].DataBoundItem as Author);
                         break;
                     case 1:
-
+                        myLibrary.Book.Remove(BooksDataGridView.SelectedRows[0].DataBoundItem as Book);
                         break;
                     case 2:
-
+                        myLibrary.Publisher.Remove(PublishersDataGridView.SelectedRows[0].DataBoundItem as Publisher);
                         break;
                 }
 
@@ -107,10 +101,10 @@ namespace Домашнє_завдання
                     myLibrary.Author.AddOrUpdate(AuthorsDataGridView.Rows[AuthorsDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Author);
                     break;
                 case 1:
-
+                    myLibrary.Book.AddOrUpdate(BooksDataGridView.Rows[BooksDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Book);
                     break;
                 case 2:
-
+                    myLibrary.Publisher.AddOrUpdate(PublishersDataGridView.Rows[PublishersDataGridView.SelectedCells[0].RowIndex].DataBoundItem as Publisher);
                     break;
             }
 
@@ -120,70 +114,182 @@ namespace Домашнє_завдання
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            switch (LibraryTabControl.SelectedIndex)
+            int selectedIndex = ParametrsComboBox.SelectedIndex;
+
+            try
             {
-                case 0:
-                    switch (ParametrsComboBox.SelectedIndex)
-                    {
-                        case 0:
-                            if (CheckNumber(InfoTextBox.Text, out int number) && !myLibrary.Author.ToList().Any(x => x.Id == number))
+                switch (LibraryTabControl.SelectedIndex)
+                {
+                    case 0:
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                if (CheckNumber(InfoTextBox.Text, out int number) && !myLibrary.Author.ToList().Any(x => x.Id == number))
+                                {
+                                    author.Id = number;
+                                    SuccsessMessage(number.ToString());
+                                }
+                                else
+                                {
+                                    throw new Exception("Введено некоректний Id!");
+                                }
+                                break;
+                            case 1:
+                                author.FirstName = InfoTextBox.Text;
+                                SuccsessMessage(InfoTextBox.Text);
+                                break;
+                            case 2:
+                                author.LastName = InfoTextBox.Text;
+                                SuccsessMessage(InfoTextBox.Text);
+                                break;
+                        }
+
+                        if (author.Id != 0 && author.LastName != null && author.FirstName != null) AddButton.Enabled = true;
+
+                        break;
+                    case 1:
+                        int checkedNumber = 0;
+
+                        if (selectedIndex == 0 || (selectedIndex > 1 && selectedIndex < 6))
+                        {
+                            if (!CheckNumber(InfoTextBox.Text, out checkedNumber))
                             {
-                                author.Id = number;
-                                SuccsessMessage(number.ToString());
+                                throw new Exception("Введено некорректне число значення!");
                             }
-                            else
-                            {
-                                MessageBox.Show("Введено не коректне значення Id!");
-                            }
-                            break;
-                        case 1:
-                            author.FirstName = InfoTextBox.Text;
-                            SuccsessMessage(InfoTextBox.Text);
-                            break;
-                        case 2:
-                            author.LastName = InfoTextBox.Text;
-                            SuccsessMessage(InfoTextBox.Text);
-                            break;
-                    }
+                        }
 
-                    InfoTextBox.Focus();
-                    if (author.Id != 0 && author.LastName != null && author.FirstName != null) AddButton.Enabled = true;
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                if (!myLibrary.Book.ToList().Any(x => x.Id == checkedNumber))
+                                {
+                                    book.Id = checkedNumber;
+                                    SuccsessMessage(checkedNumber.ToString());
+                                }
+                                else
+                                {
+                                    throw new Exception("Введено некоректний Id!");
+                                }
+                                break;
+                            case 1:
+                                book.Title = InfoTextBox.Text;
+                                SuccsessMessage(InfoTextBox.Text);
+                                break;
+                            case 2:
+                                book.IdAuthor = checkedNumber;
+                                SuccsessMessage(checkedNumber.ToString());
+                                break;
+                            case 3:
+                                book.Pages = checkedNumber;
+                                SuccsessMessage(checkedNumber.ToString());
+                                break;
+                            case 4:
+                                book.Price = checkedNumber;
+                                SuccsessMessage(checkedNumber.ToString());
+                                break;
+                            case 5:
+                                book.IdPublisher = checkedNumber;
+                                SuccsessMessage(checkedNumber.ToString());
+                                break;
+                        }
 
-                    break;
-                case 1:
+                        if (book.Id != 0 && book.Title != null && book.IdAuthor != 0 && book.Pages != 0 && book.Price != 0 && book.IdPublisher != 0) AddButton.Enabled = true;
+                        break;
+                    case 2:
+                        switch (selectedIndex)
+                        {
+                            case 0:
+                                if (CheckNumber(InfoTextBox.Text, out int number) && !myLibrary.Publisher.ToList().Any(x => x.Id == number))
+                                {
+                                    publisher.Id = number;
+                                    SuccsessMessage(number.ToString());
+                                }
+                                else
+                                {
+                                    throw new Exception("Введено некоректний Id!");
+                                }
+                                break;
+                            case 1:
+                                publisher.PublisherName = InfoTextBox.Text;
+                                SuccsessMessage(InfoTextBox.Text);
+                                break;
+                            case 2:
+                                publisher.Address = InfoTextBox.Text;
+                                SuccsessMessage(InfoTextBox.Text);
+                                break;
+                        }
 
-                    break;
-                case 2:
-
-                    break;
+                        if (publisher.Id != 0 && publisher.PublisherName != null && publisher.Address != null) AddButton.Enabled = true;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                InfoTextBox.Focus();
             }
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            switch (LibraryTabControl.SelectedIndex)
+            int tabControlIndex = LibraryTabControl.SelectedIndex;
+            try
             {
-                case 0:
-                    myLibrary.Author.Add(author);
-                    myLibrary.SaveChanges();
+                switch (tabControlIndex)
+                {
+                    case 0:
+                        myLibrary.Author.Add(author);
+                        myLibrary.SaveChanges();
 
-                    MessageBox.Show("Нового автора було додано, оновіть вкладку щоб побачити зміни!");
+                        MessageBox.Show("Нового автора було додано, оновіть вкладку щоб побачити зміни!");
+                        break;
+                    case 1:
+                        myLibrary.Book.Add(book);
+                        myLibrary.SaveChanges();
 
-                    author = new Author();
-                    break;
-                case 1:
+                        MessageBox.Show("Нову книгу було додано, оновіть вкладку щоб побачити зміни!");
+                        break;
 
-                    break;
+                    case 2:
+                        myLibrary.Publisher.Add(publisher);
+                        myLibrary.SaveChanges();
 
-                case 2:
-
-                    break;
+                        MessageBox.Show("Нового видавця було додано, оновіть вкладку щоб побачити зміни!");
+                        break;
+                }
             }
+            catch (DbUpdateException)
+            {
+                MessageBox.Show("Перевірте правильність вводу Id!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                InfoTextBox.Enabled = false;
+                ConfirmButton.Enabled = false;
+                ParametrsComboBox.SelectedIndex = -1;
+                AddButton.Enabled = false;
 
-            InfoTextBox.Enabled = false;
-            ConfirmButton.Enabled = false;
-            ParametrsComboBox.SelectedIndex = -1;
-            AddButton.Enabled = false;
+                if (tabControlIndex == 0) author = new Author();
+                else if (tabControlIndex == 1) book = new Book();
+                else if (tabControlIndex == 2) publisher = new Publisher();
+            }
+        }
+
+        private void ParametrsComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (!InfoTextBox.Enabled) InfoTextBox.Enabled = true;
+            if (!ConfirmButton.Enabled) ConfirmButton.Enabled = true;
+        }
+        private void InfoTextBox_Enter(object sender, EventArgs e)
+        {
+            InfoTextBox.Clear();
         }
     }
 }
