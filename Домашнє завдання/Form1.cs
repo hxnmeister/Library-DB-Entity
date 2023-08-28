@@ -100,6 +100,7 @@ namespace Домашнє_завдання
                             {
                                 myLibrary.Author.Remove(tempAuthor);
                             }
+
                         }
                         break;
                     case 1:
@@ -293,6 +294,7 @@ namespace Домашнє_завдання
                     case 0:
                         myLibrary.Author.Add(author);
                         myLibrary.SaveChanges();
+                        
 
                         MessageBox.Show("Нового автора було додано, оновіть вкладку щоб побачити зміни!");
                         break;
